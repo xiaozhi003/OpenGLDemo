@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 import com.android.xz.opengldemo.view.CircleGLSurfaceView;
 import com.android.xz.opengldemo.view.EnvGLSurfaceView;
@@ -26,6 +27,9 @@ public class GLActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_gl);
+
+        LinearLayout layout = findViewById(R.id.contentLayout);
         switch (getIntent().getIntExtra(EXTRA_GL_VIEW_TYPE, TYPE_ENV)) {
             case TYPE_ENV:
                 mGLSurfaceView = new EnvGLSurfaceView(this);
@@ -43,6 +47,6 @@ public class GLActivity extends AppCompatActivity {
                 mGLSurfaceView = new ImageGLSurfaceView(this);
                 break;
         }
-        setContentView(mGLSurfaceView);
+        layout.addView(mGLSurfaceView);
     }
 }

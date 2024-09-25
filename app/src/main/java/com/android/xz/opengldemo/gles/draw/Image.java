@@ -138,13 +138,6 @@ public class Image {
         texBuffer.position(0);
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        mBitmap = bitmap;
-        if (textureId == 0) {
-            textureId = createTexture();
-        }
-    }
-
     public void surfaceCreated() {
         // 加载顶点着色器程序
         int vertexShader = GLESUtils.loadShader(GLES20.GL_VERTEX_SHADER,

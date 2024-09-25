@@ -47,7 +47,9 @@ public class ImageGLSurfaceView extends GLSurfaceView {
 
         public MyRenderer(Context context) {
             mContext = context;
-            mImage = new Image(null);
+            mBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.show);
+            Log.i(TAG, "mBitmap [" + mBitmap.getWidth() + ", " + mBitmap.getHeight() + "]");
+            mImage = new Image(mBitmap);
         }
 
         @Override
@@ -59,21 +61,6 @@ public class ImageGLSurfaceView extends GLSurfaceView {
 
         @Override
         public void onSurfaceChanged(GL10 gl, int width, int height) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeResource(mContext.getResources(), R.drawable.show, options);
-            Log.i(TAG, "size [" + options.outWidth + ", " + options.outHeight + "]");
-
-            options.inJustDecodeBounds = false;
-            if (options.outWidth > width) {
-                options.inSampleSize = options.outWidth / width;
-                Log.i(TAG, "inSampleSize:" + options.inSampleSize);
-            }
-
-            mBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.show, options);
-            Log.i(TAG, "mBitmap [" + mBitmap.getWidth() + ", " + mBitmap.getHeight() + "]");
-
-            mImage.setBitmap(mBitmap);
             mImage.surfaceChanged(width, height);
         }
 
