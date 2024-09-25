@@ -29,16 +29,11 @@ public class Triangle {
 
     // 顶点着色器代码
     private final String vertexShaderCode =
-            // This matrix member variable provides a hook to manipulate
-            // the coordinates of the objects that use this vertex shader
-            "uniform mat4 uMVPMatrix;" +
-                    "attribute vec4 vPosition;" +
-                    "void main() {" +
-                    // the matrix must be included as a modifier of gl_Position
-                    // Note that the uMVPMatrix factor *must be first* in order
-                    // for the matrix multiplication product to be correct.
-                    "  gl_Position = uMVPMatrix * vPosition;" +
-                    "}";
+            "uniform mat4 uMVPMatrix;\n" +
+                    "attribute vec4 vPosition;\n" +
+                    "void main() {\n" +
+                    "  gl_Position = uMVPMatrix * vPosition;\n" +
+                    "}\n";
 
     // 片段着色器代码
     private final String fragmentShaderCode =

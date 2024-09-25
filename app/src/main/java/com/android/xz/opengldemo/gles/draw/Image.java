@@ -31,30 +31,25 @@ public class Image {
 
     // 顶点着色器代码
     private final String vertexShaderCode =
-            // This matrix member variable provides a hook to manipulate
-            // the coordinates of the objects that use this vertex shader
             "uniform mat4 uMVPMatrix;\n" +
-                    "// 顶点坐标\n" +
+                    // 顶点坐标
                     "attribute vec4 vPosition;\n" +
-                    "// 纹理坐标\n" +
+                    // 纹理坐标
                     "attribute vec2 vTexCoordinate;\n" +
                     "varying vec2 aTexCoordinate;\n" +
                     "void main() {\n" +
-                    // the matrix must be included as a modifier of gl_Position
-                    // Note that the uMVPMatrix factor *must be first* in order
-                    // for the matrix multiplication product to be correct.
                     "  gl_Position = uMVPMatrix * vPosition;\n" +
                     "  aTexCoordinate = vTexCoordinate;\n" +
-                    "}";
+                    "}\n";
 
     // 片段着色器代码
     private final String fragmentShaderCode =
-            "precision mediump float;" +
-                    "uniform sampler2D vTexture;" +
-                    "varying vec2 aTexCoordinate;" +
-                    "void main() {" +
-                    "  gl_FragColor = texture2D(vTexture, aTexCoordinate);" +
-                    "}";
+            "precision mediump float;\n" +
+                    "uniform sampler2D vTexture;\n" +
+                    "varying vec2 aTexCoordinate;\n" +
+                    "void main() {\n" +
+                    "  gl_FragColor = texture2D(vTexture, aTexCoordinate);\n" +
+                    "}\n";
 
     private int mProgram;
 
