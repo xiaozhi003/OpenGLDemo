@@ -57,7 +57,8 @@ public class Circle {
             0.5f, -0.5f, 0.0f,   // bottom right
             0.5f, 0.5f, 0.0f}; // top right
 
-    float color[] = {0.63671875f, 0.76953125f, 0.22265625f, 1.0f};
+    // 设置颜色为红色
+    float color[] = {1.0f, 0.0f, 0.0f, 1.0f};
 
     private int positionHandle;
     private int colorHandle;
@@ -121,17 +122,17 @@ public class Circle {
             // 横屏使用
             // 透视投影，特点：物体离视点越远，呈现出来的越小。离视点越近，呈现出来的越大
             // 该投影矩阵应用于对象坐标
-            Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+            Matrix.orthoM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
         } else {
             ratio = (float) height / width;
             // 竖屏使用
             // 透视投影，特点：物体离视点越远，呈现出来的越小。离视点越近，呈现出来的越大
             // 该投影矩阵应用于对象坐标
-            Matrix.frustumM(mProjectionMatrix, 0, -1, 1, -ratio, ratio, 3, 7);
+            Matrix.orthoM(mProjectionMatrix, 0, -1, 1, -ratio, ratio, 3, 7);
         }
 
         Matrix.setLookAtM(mViewMatrix, 0,
-                0, 0, 3.001f,
+                0, 0, 3f,
                 0f, 0f, 0f,
                 0f, 1.0f, 0.0f);
 
