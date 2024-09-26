@@ -1,5 +1,6 @@
 package com.android.xz.opengldemo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -47,42 +48,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        PermissionUtils.getInstance().requestPermission(this, new String[]{Manifest.permission.CAMERA}, new IPermissionsResult() {
-            @Override
-            public void passPermissions() {
-                Intent intent = null;
-                switch (v.getId()) {
-                    case R.id.envBtn:
-                        intent = new Intent(mContext, GLActivity.class);
-                        intent.putExtra(GLActivity.EXTRA_GL_VIEW_TYPE, GLActivity.TYPE_ENV);
-                        break;
-                    case R.id.triangleBtn:
-                        intent = new Intent(mContext, GLActivity.class);
-                        intent.putExtra(GLActivity.EXTRA_GL_VIEW_TYPE, GLActivity.TYPE_TRIANGLE);
-                        break;
-                    case R.id.squareBtn:
-                        intent = new Intent(mContext, GLActivity.class);
-                        intent.putExtra(GLActivity.EXTRA_GL_VIEW_TYPE, GLActivity.TYPE_SQUARE);
-                        break;
-                    case R.id.circleBtn:
-                        intent = new Intent(mContext, GLActivity.class);
-                        intent.putExtra(GLActivity.EXTRA_GL_VIEW_TYPE, GLActivity.TYPE_CIRCLE);
-                        break;
-                    case R.id.imageBtn:
-                        intent = new Intent(mContext, GLActivity.class);
-                        intent.putExtra(GLActivity.EXTRA_GL_VIEW_TYPE, GLActivity.TYPE_IMAGE);
-                        break;
-                    case R.id.cameraBtn:
-                        intent = new Intent(mContext, GLCameraActivity.class);
-                        break;
+        if (v.getId() == R.id.cameraBtn) {
+            PermissionUtils.getInstance().requestPermission(this, new String[]{Manifest.permission.CAMERA}, new IPermissionsResult() {
+                @Override
+                public void passPermissions() {
+                    startActivity(new Intent(mContext, GLCameraActivity.class));
                 }
-                startActivity(intent);
-            }
 
-            @Override
-            public void forbidPermissions() {
-
+                @Override
+                public void forbidPermissions() {
+                }
+            });
+        } else {
+            Intent intent = null;
+            switch (v.getId()) {
+                case R.id.envBtn:
+                    intent = new Intent(mContext, GLActivity.class);
+                    intent.putExtra(GLActivity.EXTRA_GL_VIEW_TYPE, GLActivity.TYPE_ENV);
+                    break;
+                case R.id.triangleBtn:
+                    intent = new Intent(mContext, GLActivity.class);
+                    intent.putExtra(GLActivity.EXTRA_GL_VIEW_TYPE, GLActivity.TYPE_TRIANGLE);
+                    break;
+                case R.id.squareBtn:
+                    intent = new Intent(mContext, GLActivity.class);
+                    intent.putExtra(GLActivity.EXTRA_GL_VIEW_TYPE, GLActivity.TYPE_SQUARE);
+                    break;
+                case R.id.circleBtn:
+                    intent = new Intent(mContext, GLActivity.class);
+                    intent.putExtra(GLActivity.EXTRA_GL_VIEW_TYPE, GLActivity.TYPE_CIRCLE);
+                    break;
+                case R.id.imageBtn:
+                    intent = new Intent(mContext, GLActivity.class);
+                    intent.putExtra(GLActivity.EXTRA_GL_VIEW_TYPE, GLActivity.TYPE_IMAGE);
+                    break;
             }
-        });
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionUtils.getInstance().onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 }

@@ -47,6 +47,7 @@ public class Square {
 
     // 此数组中每个顶点的坐标数
     static final int COORDS_PER_VERTEX = 3;
+    // 正方形四个顶点坐标
     static float squareCoords[] = {
             -0.5f, 0.5f, 0.0f,   // top left
             -0.5f, -0.5f, 0.0f,  // bottom left
@@ -54,7 +55,8 @@ public class Square {
             0.5f, 0.5f, 0.0f,    // top right
     };
 
-    private short drawOrder[] = {0, 1, 2, 0, 2, 3}; // 绘制顶点的顺序
+    // 绘制顶点的顺序
+    private short drawOrder[] = {0, 1, 2, 0, 2, 3};
 
     // 设置颜色为红色
     float color[] = {1.0f, 0.0f, 0.0f, 1.0f};
