@@ -109,9 +109,6 @@ public class Triangle {
         int fragmentShader = GLESUtils.loadShader(GLES20.GL_FRAGMENT_SHADER,
                 fragmentShaderCode);
 
-        Log.i(TAG, "vertexShader:" + vertexShader);
-        Log.i(TAG, "fragmentShader:" + fragmentShader);
-
         // 创建空的OpenGL ES程序
         mProgram = GLES20.glCreateProgram();
         // 将顶点着色器添加到程序中
