@@ -57,7 +57,7 @@ public class Image {
     private FloatBuffer vertexBuffer;
 
     // 纹理坐标缓冲区
-    private FloatBuffer texBuffer;
+    private FloatBuffer textureBuffer;
 
     // 此数组中每个顶点的坐标数
     static final int COORDS_PER_VERTEX = 2;
@@ -71,7 +71,7 @@ public class Image {
      * (-1, 1),(1, 1)
      * (-1,-1),(1,-1)
      */
-    private float sCoords[] = {
+    private float vertexCoords[] = {
             -1.0f, 1.0f,   // 左上
             -1.0f, -1.0f,  // 左下
             1.0f, 1.0f,    // 右上
@@ -90,7 +90,7 @@ public class Image {
      * 由于Bitmap拷贝到纹理中，数据从Bitmap左上角开始拷贝到纹理的原点(0,0)
      * 导致图像上下翻转了180度，所以绘制坐标需要上下翻转180度才行
      */
-    private float texCoords[] = {
+    private float textureCoords[] = {
             0.0f, 0.0f, // 左上
             0.0f, 1.0f, // 左下
             1.0f, 0.0f, // 右上
@@ -106,7 +106,7 @@ public class Image {
     // Use to access and set the view transformation
     private int vPMatrixHandle;
 
-    private final int vertexCount = sCoords.length / COORDS_PER_VERTEX;
+    private final int vertexCount = vertexCoords.length / COORDS_PER_VERTEX;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
     // vPMatrix是“模型视图投影矩阵”的缩写
@@ -119,18 +119,18 @@ public class Image {
         mBitmap = bitmap;
 
         // 初始化形状坐标的顶点字节缓冲区
-        vertexBuffer = ByteBuffer.allocateDirect(sCoords.length * 4)
+        vertexBuffer = ByteBuffer.allocateDirect(vertexCoords.length * 4)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer()
-                .put(sCoords);
+                .put(vertexCoords);
         vertexBuffer.position(0);
 
         // 初始化纹理坐标顶点字节缓冲区
-        texBuffer = ByteBuffer.allocateDirect(texCoords.length * 4)
+        textureBuffer = ByteBuffer.allocateDirect(textureCoords.length * 4)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer()
-                .put(texCoords);
-        texBuffer.position(0);
+                .put(textureCoords);
+        textureBuffer.position(0);
     }
 
     public void surfaceCreated() {
@@ -188,7 +188,7 @@ public class Image {
         // 启用纹理坐标控制句柄
         GLES20.glEnableVertexAttribArray(texCoordinateHandle);
         // 写入坐标数据
-        GLES20.glVertexAttribPointer(texCoordinateHandle, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, vertexStride, texBuffer);
+        GLES20.glVertexAttribPointer(texCoordinateHandle, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, vertexStride, textureBuffer);
 
         // 将投影和视图变换传递给着色器
         GLES20.glUniformMatrix4fv(vPMatrixHandle, 1, false, mMVPMatrix, 0);
