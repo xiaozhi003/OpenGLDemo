@@ -3,6 +3,7 @@ package com.android.xz.opengldemo.gles.draw;
 import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
+import android.opengl.Matrix;
 import android.util.Log;
 
 import com.android.xz.opengldemo.gles.GLESUtils;
@@ -86,15 +87,12 @@ public class Image {
      * 画布四个角坐标如下：
      * (0,1),(1,1)
      * (0,0),(1,0)
-     * <p>
-     * 由于Bitmap拷贝到纹理中，数据从Bitmap左上角开始拷贝到纹理的原点(0,0)
-     * 导致图像上下翻转了180度，所以绘制坐标需要上下翻转180度才行
      */
     private float textureCoords[] = {
-            0.0f, 0.0f, // 左上
-            0.0f, 1.0f, // 左下
-            1.0f, 0.0f, // 右上
-            1.0f, 1.0f, // 右下
+            0.0f, 1.0f, // 左上
+            0.0f, 0.0f, // 左下
+            1.0f, 1.0f, // 右上
+            1.0f, 0.0f, // 右下
     };
 
     private int textureId;
@@ -170,6 +168,12 @@ public class Image {
         int h = mBitmap.getHeight();
 
         MatrixUtils.getMatrix(mMVPMatrix, MatrixUtils.TYPE_CENTERINSIDE, w, h, width, height);
+
+        /**
+         * 由于Bitmap拷贝到纹理中，数据从Bitmap左上角开始拷贝到纹理的原点(0,0)
+         * 导致图像上下翻转了180度，所以绘制坐标需要上下翻转180度才行
+         */
+        MatrixUtils.rotate(mMVPMatrix, 180);
     }
 
     public void draw() {
