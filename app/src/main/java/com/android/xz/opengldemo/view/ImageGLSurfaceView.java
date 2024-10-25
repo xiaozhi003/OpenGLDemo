@@ -47,7 +47,7 @@ public class ImageGLSurfaceView extends GLSurfaceView {
 
         public MyRenderer(Context context) {
             mContext = context;
-            mBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.show);
+            mBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.beauty);
             Log.i(TAG, "mBitmap [" + mBitmap.getWidth() + ", " + mBitmap.getHeight() + "]");
             mImage = new Image(mBitmap);
         }
